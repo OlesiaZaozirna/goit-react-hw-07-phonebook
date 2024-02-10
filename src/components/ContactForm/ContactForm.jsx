@@ -1,24 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/contacts-slice'
 import { getAllContacts } from '../../redux/contacts/contacts-selectors';
 
 import css from "./ContactForm.module.css"
 
-const ContactForm = ()=> {
+import { fetchContacts, addContact} from '../../redux/contacts/contacts-operation';
+
+const ContactForm = () => {
  const [formData, setFormData] = useState ({
     name: '',
     number: '',
  });
-  const contacts = useSelector(getAllContacts);
+  const {items} = useSelector(getAllContacts);
  
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts())
+
+  }, [dispatch]);
 
   const handleSubmit = e => {
     e.preventDefault();
 
     //перевірка на дублювання номера
-    const isUnique = !contacts.some(contact => contact.name === formData.name);
+    const isUnique = !items.some(contact => contact.name === formData.name);
     if (!isUnique) {
       alert('This contact already exists');
       return;
@@ -33,9 +39,9 @@ const ContactForm = ()=> {
       alert('Please enter a valid phone number');
       return;
     }
+      
+    dispatch(addContact(formData));
 
-    const newContact = { ...formData};
-    dispatch(addContact(newContact));
     setFormData({ name: '', number: '' });
   };
   
@@ -43,7 +49,7 @@ const ContactForm = ()=> {
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
-  };
+     };
   
   const validateName = name => /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(name);
 
