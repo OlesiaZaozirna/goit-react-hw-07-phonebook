@@ -1,16 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as contactsAPI from '../../components/API/contactsAPI';
-/*import {
-  fetchContactsLoading,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactLoading,
-  addContactSuccess,
-  addContactError,
-  deleteContactLoading,
-  deleteContactSuccess,
-  deleteContactError,
-} from './contacts-slice';*/
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
@@ -48,7 +37,18 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-/*
+/*import {
+  fetchContactsLoading,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactLoading,
+  addContactSuccess,
+  addContactError,
+  deleteContactLoading,
+  deleteContactSuccess,
+  deleteContactError,
+} from './contacts-slice';
+
 export const fetchContacts = () => {
   //Action Creator
   const func = async dispatch => {

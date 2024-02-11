@@ -1,6 +1,6 @@
 import { useState, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllContacts } from '../../redux/contacts/contacts-selectors';
+import { selectFilteredContacts } from "../../redux/contacts/contacts-selectors";
 
 import css from "./ContactForm.module.css"
 
@@ -11,7 +11,7 @@ const ContactForm = () => {
     name: '',
     number: '',
  });
-  const {items} = useSelector(getAllContacts);
+  const {items} = useSelector(selectFilteredContacts);
  
   const dispatch = useDispatch();
 
