@@ -1,5 +1,6 @@
-import * as contactsAPI from '../../components/API/contacts-api';
-import {
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import * as contactsAPI from '../../components/API/contactsAPI';
+/*import {
   fetchContactsLoading,
   fetchContactsSuccess,
   fetchContactsError,
@@ -9,10 +10,47 @@ import {
   deleteContactLoading,
   deleteContactSuccess,
   deleteContactError,
-} from './contacts-slice';
+} from './contacts-slice';*/
 
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async (_, thunkAPI) => {
+    try {
+      const data = await contactsAPI.requestFetchContacts();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (body, { rejectWithValue }) => {
+    try {
+      const data = await contactsAPI.requestAddContacts(body);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, { rejectWithValue }) => {
+    try {
+      await contactsAPI.requestDeleteContact(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+/*
 export const fetchContacts = () => {
-  // Action Creator
+  //Action Creator
   const func = async dispatch => {
     try {
       dispatch(fetchContactsLoading());
@@ -50,3 +88,4 @@ export const deleteContact = id => {
   };
   return func;
 };
+*/
