@@ -48,3 +48,8 @@
   align-items: center;
   width: 100%;
 }
+.Description {
+  margin: 0;
+  font-weight: 500;
+  color: #3d3ea0;
+}

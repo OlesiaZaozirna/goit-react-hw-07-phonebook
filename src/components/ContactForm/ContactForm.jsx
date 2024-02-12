@@ -1,30 +1,27 @@
-import { useState, useEffect  } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilteredContacts } from "../../redux/contacts/contacts-selectors";
 
 import css from "./ContactForm.module.css"
 
-import { fetchContacts, addContact} from '../../redux/contacts/contacts-operation';
+import {addContact} from '../../redux/contacts/contacts-operation';
 
 const ContactForm = () => {
  const [formData, setFormData] = useState ({
     name: '',
     number: '',
  });
-  const {items} = useSelector(selectFilteredContacts);
+  const contacts = useSelector(selectFilteredContacts);
  
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts())
-
-  }, [dispatch]);
+ 
 
   const handleSubmit = e => {
     e.preventDefault();
 
     //перевірка на дублювання номера
-    const isUnique = !items.some(contact => contact.name === formData.name);
+    const isUnique = !contacts.some(contact => contact.name === formData.name);
     if (!isUnique) {
       alert('This contact already exists');
       return;

@@ -18,14 +18,18 @@ function ContactList(){
     return <div>Loading...</div>;
   }
 
-    return (
+  
+  return (
     <ul className={css.ContactListContainer}>
-      {contacts.map(({ id, name, number }) => (
-          <li className={css.ContactListItem} key={id}>
-          {name}: {number}
-           <button className={css.Delete} onClick={() => dispatch(deleteContact(id))}>Delete</button>
+      {contacts.map(({ id, name, phone }) => (
+        <li className={css.ContactListItem} key={id}>
+          <p className={css.Description}>
+            {name}: {phone}
+          </p>
+          <button className={css.Delete} onClick={() => dispatch(deleteContact(id))}>Delete</button>
         </li>
       ))}
+    
     </ul>
   );
 };

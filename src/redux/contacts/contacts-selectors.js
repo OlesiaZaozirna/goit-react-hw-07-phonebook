@@ -1,7 +1,7 @@
 export const selectContacts = store => store.contacts;
 
 export const selectFilteredContacts = store => {
-  const { filter, contacts } = store;
+  const { contacts, filter } = store;
   if (!filter) {
     return contacts.items;
   }
